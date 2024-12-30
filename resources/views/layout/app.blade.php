@@ -92,14 +92,14 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="{{asset('resources/img/logo.png')}}" alt=""></a>
+                    <a href="{{route('home')}}"><img src="{{asset('resources/img/logo.png')}}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
+                        <x-nav-link route="home">Home</x-nav-link>
+                        <x-nav-link route="shop">Shop</x-nav-link>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./about.html">About Us</a></li>
@@ -136,7 +136,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__logo">
-                        <a href="#"><img src="{{asset('resources/img/footer-logo.png')}}" alt=""></a>
+                        <a href="{{route('home')}}"><img src="{{asset('resources/img/footer-logo.png')}}" alt=""></a>
                     </div>
                     <p>The customer is at the heart of our unique business model, which includes design.</p>
                     <a href="#"><img src="{{asset('resources/img/payment.png')}}" alt=""></a>
@@ -184,7 +184,7 @@
                     <p>Copyright ©
                         <script>
                             document.write(new Date().getFullYear());
-                        </script>2020
+                        </script>
                         All rights reserved | This template is made with <i class="fa fa-heart-o"
                                                                             aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                     </p>

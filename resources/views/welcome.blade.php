@@ -16,7 +16,7 @@
                                 <h6 id="collection-season"></h6>
                                 <h2>
                                     <span id="collection-name"></span> Collections
-                                    <script>document.write(new Date().getFullYear());</script>
+{{--                                    <script>document.write(new Date().getFullYear());</script>--}}
                                 </h2>
 
                                 <script>

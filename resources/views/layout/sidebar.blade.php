@@ -69,16 +69,16 @@
             <div class="collapse" id="forms">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('Category')}}">All Categories</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('addCategory')}}">Add Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../pages/forms/basic_elements.html">All Categories</a>
+                        <a class="nav-link" href="../pages/forms/basic_elements.html">All Sub-Categories</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/forms/basic_elements.html">Add Sub-Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../pages/forms/basic_elements.html">All Sub-Categories</a>
                     </li>
                 </ul>
             </div>

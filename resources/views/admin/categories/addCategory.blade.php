@@ -19,7 +19,14 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add Category</h4>
-                    <form class="forms-sample">
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form class="forms-sample" action="{{route('insertCategory')}}" method="post">
+                        @csrf
                         <div class="form-group">
                             <label for="exampleInputName1">Category Name</label>
                             <input type="text" name="categoryName" class="form-control" id="exampleInputName1" placeholder="Name">

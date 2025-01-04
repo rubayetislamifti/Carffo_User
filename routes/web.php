@@ -19,7 +19,11 @@ Route::prefix('/admin')->group(function () {
 
     Route::middleware(AdminMiddleware::class)->group(function () {
         Route::get('/welcome', [DashboardController::class, 'welcome'])->name('dashboard');
+        Route::get('category', [Categories::class, 'index'])->name('Category');
         Route::get('category/addCategory', [Categories::class, 'create'])->name('addCategory');
+        Route::post('category/insertCategory', [Categories::class, 'store'])->name('insertCategory');
+
+
         Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
     });
 });

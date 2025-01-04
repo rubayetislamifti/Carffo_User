@@ -32,10 +32,16 @@
                         </div>
                         <h4>Hello! let's get started</h4>
                         <h6 class="font-weight-light">Sign in to continue.</h6>
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <form class="pt-3" method="post" action="{{route('logged')}}">
                             @csrf
                             <div class="form-group">
-                                <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                <input type="email" name="email" value="{{ old('email') }}" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">

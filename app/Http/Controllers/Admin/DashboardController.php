@@ -21,8 +21,10 @@ class DashboardController extends Controller
 
         if ($email == env('ADMIN_EMAIL') && Hash::check($password, $hased)) {
             session(['is_admin_authenticated' => true]);
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Welcome to Dashboard');
         }
+        else
+            return redirect()->back()->withInput($request->only('email'))->with('error', 'Wrong Email or Password!');
     }
 
     public function welcome()

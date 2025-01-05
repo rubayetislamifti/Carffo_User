@@ -25,6 +25,8 @@
                             <tr>
                                 <th> # </th>
                                 <th> Name </th>
+                                <th> Related Products </th>
+                                <th> Show </th>
                                 <th> Edit </th>
                                 <th> Delete </th>
 
@@ -35,6 +37,8 @@
                             <tr>
                                 <td> {{$category->id}} </td>
                                 <td> {{$category->category_name}} </td>
+                                <td> TBA </td>
+                                <td> <a href="{{route('showCategory',['id'=>$category->id])}}/{{ Str::slug($category->category_name) }}" class="btn btn-gradient-info me-2">Show Products</a> </td>
                                 <td> <a href="#" class="btn btn-gradient-primary me-2">Edit</a> </td>
                                 <td> <button class="btn btn-danger me-2">Delete</button> </td>
                             </tr>

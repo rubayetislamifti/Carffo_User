@@ -26,11 +26,10 @@
                             <thead>
                             <tr>
                                 <th> # </th>
-                                <th> Name </th>
-                                <th> Related Products </th>
-                                <th> Show </th>
-                                <th> Edit </th>
-                                <th> Delete </th>
+                                <th> Products </th>
+                                <th> Sub-Category </th>
+                                <th> Image </th>
+                                <th> Price </th>
                             </tr>
                             </thead>
                             <tbody>

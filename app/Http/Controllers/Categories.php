@@ -12,7 +12,7 @@ class Categories extends Controller
      */
     public function index()
     {
-        return view('admin.categories.allCategories',['categories'=>Category::all()]);
+        return view('admin.categories.index',['categories'=>Category::all()]);
     }
 
     /**
@@ -20,7 +20,7 @@ class Categories extends Controller
      */
     public function create()
     {
-        return view('admin.categories.addCategory');
+        return view('admin.categories.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class Categories extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.categories.showCategory',[
+        return view('admin.categories.show',[
             'categories'=>Category::where('id',$id)->first()
         ]);
     }
@@ -50,7 +50,9 @@ class Categories extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.categories.edit',[
+            'categories'=>Category::where('id',$id)->first()
+        ]);
     }
 
     /**

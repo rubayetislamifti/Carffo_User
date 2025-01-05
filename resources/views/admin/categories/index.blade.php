@@ -18,8 +18,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Category Table</h4>
-                        {{--                        <p class="card-description"> Add class <code>.table-bordered</code>--}}
-                        {{--                        </p>--}}
+{{--                        <p class="card-description"> Add class <code>.table-bordered</code>--}}
+{{--                        </p>--}}
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -39,7 +39,7 @@
                                 <td> {{$category->category_name}} </td>
                                 <td> TBA </td>
                                 <td> <a href="{{route('showCategory',['id'=>$category->id])}}/{{ Str::slug($category->category_name) }}" class="btn btn-gradient-info me-2">Show Products</a> </td>
-                                <td> <a href="#" class="btn btn-gradient-primary me-2">Edit</a> </td>
+                                <td> <a href="{{ route('editCategory', ['id' => $category->id, 'name' => Str::slug($category->category_name)]) }}" class="btn btn-gradient-primary me-2">Edit</a> </td>
                                 <td> <button class="btn btn-danger me-2">Delete</button> </td>
                             </tr>
                             @endforeach

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Products;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\HomepageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -22,6 +23,7 @@ Route::prefix('/admin')->group(function () {
 
         Route::resource('category', Categories::class);
         Route::resource('subcategory', SubCategories::class);
+        Route::resource('product', Products::class);
 
         Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
     });

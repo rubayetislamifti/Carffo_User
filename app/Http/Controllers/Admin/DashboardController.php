@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -15,6 +16,20 @@ class DashboardController extends Controller
 
     public function logging(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+
+            'email' => 'required|email',
+            'password' => 'required',
+            'g-recaptcha-response' => 'recaptcha',
+        ],[
+            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA.', // Custom error message
+            'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.', // Custom error message
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withInput($request->only('email'))
+                ->withErrors($validator);
+        }
         $email = $request->input('email');
         $password = $request->input('password');
         $hased = env('ADMIN_PASSWORD');

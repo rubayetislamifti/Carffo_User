@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{asset('adminresources/assets/css/style.css')}}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('adminresources/assets/images/favicon.png')}}" />
+
+    {!! htmlScriptTagJsApi() !!}
 </head>
 <body>
 <div class="container-scroller">
@@ -32,10 +34,21 @@
                         </div>
                         <h4>Hello! let's get started</h4>
                         <h6 class="font-weight-light">Sign in to continue.</h6>
-                        @if(session('error'))
+{{--                        @if(session('error'))--}}
+{{--                            <div class="alert alert-danger alert-dismissible fade show" role="alert">--}}
+{{--                                {{ session('error') }}--}}
+{{--                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+
+                        @if($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
                         <form class="pt-3" method="post" action="{{route('logged')}}">
@@ -45,6 +58,12 @@
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                {!! htmlFormSnippet() !!}
+                                @error('g-recaptcha-response')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mt-3 d-grid gap-2">
                                 <input class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="submit" value="SIGN IN">

@@ -69,7 +69,15 @@ class SubCategories extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            return view('admin.subcategories.show',['subcategories'=>Subcategory::findOrFail($id)]);
+        }
+        catch (\Exception $exception){
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+        catch (\QueryException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -77,7 +85,16 @@ class SubCategories extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            return view('admin.subcategories.edit',['subcategories'=>Subcategory::findOrFail($id),
+                'categories'=>Category::all()]);
+        }
+        catch (\Exception $exception){
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+        catch (\QueryException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**

@@ -47,8 +47,8 @@
                                         <td> {{$subcategory->id}} </td>
                                         <td> {{$subcategory->sub_category}} </td>
                                         <td> TBA </td>
-                                        <td> <a href="#" class="btn btn-gradient-info me-2">Show Products</a> </td>
-                                        <td> <a href="#" class="btn btn-gradient-primary me-2">Edit</a> </td>
+                                        <td> <a href="{{route('subcategory.show',['subcategory'=>$subcategory->id])}}" class="btn btn-gradient-info me-2">Show Products</a> </td>
+                                        <td> <a href="{{route('subcategory.edit',['subcategory'=>$subcategory->id])}}" class="btn btn-gradient-primary me-2">Edit</a> </td>
                                         <td> <button class="btn btn-danger me-2">Delete</button> </td>
                                     </tr>
                                 @endforeach

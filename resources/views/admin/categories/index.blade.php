@@ -38,8 +38,8 @@
                                 <td> {{$category->id}} </td>
                                 <td> {{$category->category_name}} </td>
                                 <td> TBA </td>
-                                <td> <a href="{{route('showCategory',['id'=>$category->id])}}/{{ Str::slug($category->category_name) }}" class="btn btn-gradient-info me-2">Show Products</a> </td>
-                                <td> <a href="{{ route('editCategory', ['id' => $category->id, 'name' => Str::slug($category->category_name)]) }}" class="btn btn-gradient-primary me-2">Edit</a> </td>
+                                <td> <a href="{{route('category.show',['category'=>$category->id])}}" class="btn btn-gradient-info me-2">Show Products</a> </td>
+                                <td> <a href="{{ route('category.edit', ['category' => $category->id])}}" class="btn btn-gradient-primary me-2">Edit</a> </td>
                                 <td> <button class="btn btn-danger me-2">Delete</button> </td>
                             </tr>
                             @endforeach

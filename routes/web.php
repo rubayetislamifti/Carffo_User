@@ -8,8 +8,7 @@ use App\Http\Controllers\Categories;
 use App\Http\Controllers\SubCategories;
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
-Route::get('/shop', [HomepageController::class, 'shop'])
-    ->name('shop');
+Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
 
 
 
@@ -21,15 +20,8 @@ Route::prefix('/admin')->group(function () {
     Route::middleware(AdminMiddleware::class)->group(function () {
         Route::get('/welcome', [DashboardController::class, 'welcome'])->name('dashboard');
 
-        Route::get('category', [Categories::class, 'index'])->name('Category');
-        Route::get('category/create', [Categories::class, 'create'])->name('addCategory');
-        Route::post('category', [Categories::class, 'store'])->name('insertCategory');
-        Route::get('category/{id}/{name?}', [Categories::class, 'show'])->name('showCategory');
-        Route::get('category/{id}/{name?}/edit', [Categories::class, 'edit'])->name('editCategory');
-
-        Route::get('subcategory/create', [SubCategories::class, 'create'])->name('addSubCategory');
-        Route::post('subcategory', [SubCategories::class, 'store'])->name('insertSubCategory');
-        Route::get('subcategory', [SubCategories::class, 'index'])->name('SubCategory');
+        Route::resource('category', Categories::class);
+        Route::resource('subcategory', SubCategories::class);
 
         Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
     });

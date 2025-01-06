@@ -26,7 +26,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form class="forms-sample" action="{{route('insertCategory')}}" method="post">
+                    <form class="forms-sample" action="{{route('category.update',['category'=>$categories->id])}}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputName1">Category Name</label>

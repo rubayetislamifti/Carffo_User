@@ -42,16 +42,53 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select name="category" class="form-select" id="category">
-                                    <option value="Men">Men</option>
-                                    <option value="Women">Women</option>
-                                    <option value="Kids">Kids</option>
+                                <select name="category" class="form-select" id="categorySelect">
+                                    <option value="">Select Category</option>
+                                    @if($category->isEmpty() && !isset($error))
+                                        <p>No categories found.</p>
+                                    @else
+                                        @foreach($category as $categories)
+                                            <option value="{{$categories->category_name}}">{{$categories->category_name}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="subCategory">Sub-Category</label>
-                                <input type="text" name="sub_category" class="form-control" id="subCategory" placeholder="Sub-Category">
+                                <select name="subCategory" class="form-select" id="subCategorySelect">
+                                    <option value="">Select Subcategory</option>
+                                </select>
                             </div>
+
+                            <script>
+                                document.getElementById('categorySelect').addEventListener('change', function() {
+                                    var selectedCategory = this.value; // Selected category name
+                                    var subCategories = @json($subcategory); // All subcategories
+
+                                    var subCategorySelect = document.getElementById('subCategorySelect');
+                                    subCategorySelect.innerHTML = ''; // Clear existing options
+
+                                    // Add default option
+                                    var defaultOption = document.createElement('option');
+                                    defaultOption.value = '';
+                                    defaultOption.textContent = 'Select Subcategory';
+                                    subCategorySelect.appendChild(defaultOption);
+
+                                    // Filter subcategories based on the selected category
+                                    var filteredSubCategories = subCategories.filter(function(subcategory) {
+                                        return subcategory.category === selectedCategory; // Use the correct property name
+                                    });
+
+                                    // Add options for filtered subcategories
+                                    filteredSubCategories.forEach(function(subcategory) {
+                                        var option = document.createElement('option');
+                                        option.value = subcategory.sub_category; // Ensure this matches your database field
+                                        option.textContent = subcategory.sub_category; // Ensure this matches your database field
+                                        subCategorySelect.appendChild(option);
+                                    });
+                                });
+                            </script>
+
                             <div class="form-group">
                                 <label for="sizes">Sizes</label>
                                 <select name="sizes[]" class="form-select" id="sizes" multiple>

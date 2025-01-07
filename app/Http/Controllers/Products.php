@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class Products extends Controller
@@ -19,7 +21,12 @@ class Products extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.products.create',[
+            'category'=>Category::all(),
+            'subcategory'=>Subcategory::all(),
+        ]);
+
+
     }
 
     /**

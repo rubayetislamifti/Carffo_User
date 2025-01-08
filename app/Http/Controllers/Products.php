@@ -13,7 +13,11 @@ class Products extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.products.index',
+        [
+            'total_products'=>\App\Models\Products::count(),
+            'products'=>\App\Models\Products::all()
+        ]);
     }
 
     /**
@@ -34,7 +38,41 @@ class Products extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_name'=>'required|string',
+            'description'=>'required|string',
+            'price'=>'required|numeric',
+            'stock'=>'required|numeric',
+            'category'=>'required|string',
+            'subCategory'=>'required|string',
+            'colors' => 'required|array',
+            'colors.*' => 'string',
+            'sizes' => 'required|array',
+            'sizes.*' => 'in:S,M,L,XL,XXL,XXXL',
+            'image'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $sizes = implode(' ,', $request->input('sizes'));
+        $colors = implode(' ,', $request->input('colors'));
+
+        if ($request->hasFile('image')) {
+            $image = time() . '.' . $request->image->getClientOriginalExtension();
+            $path = $request->image->move(public_path('products'), $image);
+        }
+
+        \App\Models\Products::create([
+            'product_name'=>$request->input('product_name'),
+            'description'=>$request->input('description'),
+            'price'=>$request->input('price'),
+            'stock'=>$request->input('stock'),
+            'image'=>$image,
+            'category'=>$request->input('category'),
+            'sub_category'=>$request->input('subCategory'),
+            'size'=>$sizes,
+            'color'=>$colors,
+        ]);
+
+        return redirect()->back()->with('success','Product added successfully');
     }
 
     /**
@@ -42,7 +80,11 @@ class Products extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('admin.products.show',[
+            'product'=>\App\Models\Products::find($id),
+            'previousProduct'=>\App\Models\Products::where('id', '<', $id)->orderBy('id', 'desc')->first(),
+            'nextProduct'=>\App\Models\Products::where('id', '>', $id)->orderBy('id', 'asc')->first()
+        ]);
     }
 
     /**
@@ -66,6 +108,14 @@ class Products extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = \App\Models\Products::findOrFail($id);
+        $imagePath = public_path('products/' . $product->image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $product->delete();
+
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
     }
 }

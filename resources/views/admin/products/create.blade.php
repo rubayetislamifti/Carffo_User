@@ -18,6 +18,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Create New Product</h4>
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <form class="forms-sample" method="post" action="{{ route('product.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -31,10 +37,6 @@
                             <div class="form-group">
                                 <label for="productPrice">Price</label>
                                 <input type="number" name="price" class="form-control" id="productPrice" placeholder="Product Price">
-                            </div>
-                            <div class="form-group">
-                                <label for="previousPrice">Previous Price</label>
-                                <input type="number" name="previous_price" class="form-control" id="previousPrice" placeholder="Previous Price">
                             </div>
                             <div class="form-group">
                                 <label for="stock">Stock</label>
@@ -118,10 +120,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="material">Material</label>
-                                <input type="text" name="material" class="form-control" id="material" placeholder="Material (e.g., Cotton, Polyester)">
-                            </div>
-                            <div class="form-group">
                                 <label>Product Image</label>
                                 <input type="file" name="image" class="file-upload-default">
                                 <div class="input-group col-xs-12">
@@ -131,10 +129,7 @@
                             </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="discount">Discount (%)</label>
-                                <input type="number" name="discount" class="form-control" id="discount" placeholder="Discount Percentage">
-                            </div>
+
                             <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                             <button class="btn btn-light" type="reset">Cancel</button>
                         </form>

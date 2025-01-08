@@ -19,5 +19,7 @@ class Products extends Model
         'sub_category',
         'previous_price',
         'discount',
+        'size',
+        'color'
     ];
 }

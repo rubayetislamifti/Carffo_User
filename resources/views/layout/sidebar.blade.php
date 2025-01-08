@@ -32,7 +32,7 @@
                         <a class="nav-link" href="{{route('product.create')}}">Add Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../pages/ui-features/dropdowns.html">Products List</a>
+                        <a class="nav-link" href="{{route('product.index')}}">Products List</a>
                     </li>
 {{--                    <li class="nav-item">--}}
 {{--                        <a class="nav-link" href="../pages/ui-features/typography.html">Typography</a>--}}

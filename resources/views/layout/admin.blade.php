@@ -57,5 +57,15 @@
 <!-- endinject -->
 <!-- Custom js for this page -->
 <script src="{{asset('adminresources/assets/js/dashboard.js')}}"></script>
+<script src="{{asset('adminresources/assets/vendors/select2/select2.min.js')}}"></script>
+<script src="{{asset('adminresources/assets/vendors/typeahead.js/typeahead.bundle.min.js')}}"></script>
+
+<script src="{{asset('adminresources/assets/js/file-upload.js')}}"></script>
+<script src="{{asset('adminresources/assets/js/typeahead.js')}}"></script>
+<script src="{{asset('adminresources/assets/js/select2.js')}}"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -45,7 +45,7 @@
                         <li class="list-group-item"><strong>Monthly Sales:</strong> </li>
                         <li class="list-group-item"><strong>Yearly Sales:</strong> </li>
                         <div class="d-flex justify-content-between mt-3">
-                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-info">Edit</a>
+                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-info">Discount/Edit</a>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
                         </div>
                     </ul>

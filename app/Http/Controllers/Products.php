@@ -92,7 +92,13 @@ class Products extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.products.edit',[
+            'product'=>\App\Models\Products::find($id),
+            'category'=>Category::all(),
+            'subcategory'=>Subcategory::all(),
+            'sizes'=>explode(', ', \App\Models\Products::find($id)->size),
+            'colors'=>explode(', ', \App\Models\Products::find($id)->color)
+        ]);
     }
 
     /**

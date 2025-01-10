@@ -50,7 +50,7 @@
                                         <p>No categories found.</p>
                                     @else
                                         @foreach($category as $categories)
-                                            <option value="{{$categories->category_name}}">{{$categories->category_name}}</option>
+                                            <option value="{{$categories->id}}">{{$categories->category_name}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -84,7 +84,7 @@
                                     // Add options for filtered subcategories
                                     filteredSubCategories.forEach(function(subcategory) {
                                         var option = document.createElement('option');
-                                        option.value = subcategory.sub_category; // Ensure this matches your database field
+                                        option.value = subcategory.id; // Ensure this matches your database field
                                         option.textContent = subcategory.sub_category; // Ensure this matches your database field
                                         subCategorySelect.appendChild(option);
                                     });

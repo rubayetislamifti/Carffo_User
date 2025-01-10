@@ -28,6 +28,7 @@
                         @endif
                         <form class="forms-sample" action="{{route('subcategory.update',['subcategory'=>$subcategories->id])}}" method="post">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="exampleInputName1">Sub Category Name</label>
                                 <input type="text" name="categoryName" class="form-control" value="{{$subcategories->sub_category}}" id="exampleInputName1" placeholder="Name">

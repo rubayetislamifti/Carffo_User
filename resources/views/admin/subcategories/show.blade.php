@@ -20,29 +20,30 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">List of Products in the <em>{{$subcategories->sub_category}}</em> Sub Categories</h4>
-                        <p class="card-description"> This subcategories contains <strong>0</strong> product(s).
+                        <p class="card-description"> This subcategories contains <strong>{{$total_products}}</strong> product(s).
                         </p>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th> # </th>
                                 <th> Products </th>
-                                <th> Sub-Category </th>
+                                <th> Category </th>
                                 <th> Image </th>
                                 <th> Price </th>
+                                <th> View Product </th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{--                            @foreach($categories as $category)--}}
-                            {{--                                <tr>--}}
-                            {{--                                    <td> {{$category->id}} </td>--}}
-                            {{--                                    <td> {{$category->category_name}} </td>--}}
-                            {{--                                    <td> TBA </td>--}}
-                            {{--                                    <td> <a href="{{route('showCategory',['id'=>$category->id])}}/{{ Str::slug($category->category_name) }}" class="btn btn-gradient-info me-2">Show Products</a> </td>--}}
-                            {{--                                    <td> <a href="#" class="btn btn-gradient-primary me-2">Edit</a> </td>--}}
-                            {{--                                    <td> <button class="btn btn-danger me-2">Delete</button> </td>--}}
-                            {{--                                </tr>--}}
-                            {{--                            @endforeach--}}
+                            @foreach($products as $category)
+                                <tr>
+                                    <td> {{$category->product_id}} </td>
+                                    <td> {{$category->product_name}} </td>
+                                    <td> {{$category->category_name}} </td>
+                                    <td> <img src="{{asset('products/'.$category->image)}}"> </td>
+                                    <td> {{$category->price}} </td>
+                                    <td> <a href="{{route('product.show',['product'=>$category->product_id])}}" class="btn btn-gradient-primary"> View Product </a> </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -10,7 +10,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Products</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('product.index') }}">List of Products</a></li>
-                    <li class="breadcrumb-item" aria-current="page">{{ $product->product_name }}</li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="{{ route('product.show',['product'=>$product->id]) }}">{{ $product->product_name }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Edit Product: {{ $product->product_name }}</li>
                 </ol>
             </nav>
@@ -19,15 +19,16 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Create New Product</h4>
+                        <h4 class="card-title">Edit Product: {{ $product->product_name }}</h4>
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
-                        <form class="forms-sample" method="post" action="{{ route('product.store') }}" enctype="multipart/form-data">
+                        <form class="forms-sample" method="post" action="{{ route('product.update',['product'=>$product->id]) }}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="productName">Product Name</label>
                                 <input type="text" name="product_name" class="form-control" id="productName" value="{{$product->product_name}}" placeholder="Product Name">

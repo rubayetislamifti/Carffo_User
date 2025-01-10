@@ -22,4 +22,15 @@ class Products extends Model
         'size',
         'color'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category', 'id');
+    }
+
+    // Product belongs to a Subcategory
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class, 'sub_category', 'id');
+    }
 }

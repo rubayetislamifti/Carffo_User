@@ -31,7 +31,7 @@
                             <tr>
                                 <th> # </th>
                                 <th> Name </th>
-                                <th> Related Products </th>
+
                                 <th> Show </th>
                                 <th> Edit </th>
                                 <th> Delete </th>
@@ -46,11 +46,32 @@
                                     <tr>
                                         <td> {{$subcategory->id}} </td>
                                         <td> {{$subcategory->sub_category}} </td>
-                                        <td> TBA </td>
                                         <td> <a href="{{route('subcategory.show',['subcategory'=>$subcategory->id])}}" class="btn btn-gradient-info me-2">Show Products</a> </td>
                                         <td> <a href="{{route('subcategory.edit',['subcategory'=>$subcategory->id])}}" class="btn btn-gradient-primary me-2">Edit</a> </td>
-                                        <td> <button class="btn btn-danger me-2">Delete</button> </td>
+                                        <td> <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$subcategory->id}}">Delete</button> </td>
                                     </tr>
+
+                                    <div class="modal fade" id="deleteModal{{$subcategory->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel">Delete Category: {{$subcategory->sub_category}}</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this subcategory? All products will be deleted too.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <!-- Form to delete product -->
+                                                    <form id="deleteForm" action="{{ route('subcategory.destroy', $subcategory->id) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             @endif
                             </tbody>

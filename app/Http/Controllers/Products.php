@@ -80,8 +80,15 @@ class Products extends Controller
      */
     public function show(string $id)
     {
+
+
         return view('admin.products.show',[
-            'product'=>\App\Models\Products::find($id),
+            'product'=>\App\Models\Products::where('products.id',$id)
+            ->join('categories','products.category','=','categories.id')
+            ->join('subcategories','products.sub_category','=','subcategories.id')
+                ->select('products.*','products.id as product_id','categories.category_name as category_name','subcategories.sub_category as sub_category_name')
+                ->first(),
+
             'previousProduct'=>\App\Models\Products::where('id', '<', $id)->orderBy('id', 'desc')->first(),
             'nextProduct'=>\App\Models\Products::where('id', '>', $id)->orderBy('id', 'asc')->first()
         ]);
@@ -104,10 +111,84 @@ class Products extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $product = \App\Models\Products::findOrFail($id); // Fetch the product
+
+        // Keep track of changes
+        $updatedFields = [];
+        $originalPrice = $product->price;
+        // Update only the fields that have been modified
+        if ($request->has('product_name')) {
+            $product->product_name = $request->input('product_name');
+            $updatedFields[] = 'product_name';
+        }
+
+        if ($request->has('description')) {
+            $product->description = $request->input('description');
+            $updatedFields[] = 'description';
+        }
+
+        if ($request->has('price')) {
+           // $product->previous_price = $product->price; // Save current price as previous
+            if ($originalPrice == $product->previous_price) {
+                $product->previous_price = $originalPrice;
+            }
+            $product->price = $request->input('price');
+            $updatedFields[] = 'price';
+        }
+
+        if ($request->has('discount')) {
+            $product->discount = $request->input('discount');
+
+            // Update price after discount
+            $newPrice = $product->price - ($product->price * ($product->discount / 100));
+            $product->previous_price = $product->price;
+            $product->price = $newPrice;
+            $updatedFields[] = 'discount';
+        }
+
+        if ($request->has('stock')) {
+            $product->stock = $request->input('stock');
+            $updatedFields[] = 'stock';
+        }
+
+        if ($request->hasFile('image')) {
+            if ($product->image && file_exists(public_path('products/' . $product->image))) {
+                unlink(public_path('products/' . $product->image));
+            }
+            $image = time() . '.' . $request->image->getClientOriginalExtension();
+            $path = $request->image->move(public_path('products'), $image);
+            $product->image = $image;
+            $updatedFields[] = 'image';
+        }
+
+        if ($request->has('category')) {
+            $product->category = $request->input('category');
+            $updatedFields[] = 'category';
+        }
+
+        if ($request->has('sub_category')) {
+            $product->sub_category = $request->input('sub_category');
+            $updatedFields[] = 'sub_category';
+        }
+
+        if ($request->has('sizes')) {
+            $product->size = implode(',', $request->input('sizes'));
+            $updatedFields[] = 'size';
+        }
+
+        if ($request->has('colors')) {
+            $product->color = implode(',', $request->input('colors'));
+            $updatedFields[] = 'color';
+        }
+
+        // Save updated product
+        $product->save();
+
+        return redirect()->back()->with('success', 'Product updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.

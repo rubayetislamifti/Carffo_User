@@ -9,8 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Categories</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{$categories->category_name}}</li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Category</li>
+                <li class="breadcrumb-item"><a href="{{route('category.index')}}">Category List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$categories->category_name}}</li>
             </ol>
         </nav>
     </div>
@@ -28,6 +28,7 @@
                     @endif
                     <form class="forms-sample" action="{{route('category.update',['category'=>$categories->id])}}" method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="exampleInputName1">Category Name</label>
                             <input type="text" name="categoryName" class="form-control" value="{{$categories->category_name}}" id="exampleInputName1" placeholder="Name">

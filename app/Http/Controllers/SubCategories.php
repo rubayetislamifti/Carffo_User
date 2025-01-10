@@ -46,11 +46,11 @@ class SubCategories extends Controller
     public function store(Request $request)
     {
         try {
-            $category = Category::where('id', $request->input('parentCategory'))->first();
+//            $category = Category::where('id', $request->input('parentCategory'))->first();
 
             Subcategory::create([
                 'sub_category' => $request->input('subcategoryName'),
-                'category' => $category->category_name
+                'category' => $request->input('parentCategory')
             ]);
 
             return redirect()->back()->with('success', 'Subcategory created successfully');
@@ -70,7 +70,12 @@ class SubCategories extends Controller
     public function show(string $id)
     {
         try {
-            return view('admin.subcategories.show',['subcategories'=>Subcategory::findOrFail($id)]);
+            return view('admin.subcategories.show',['subcategories'=>Subcategory::findOrFail($id),
+                'products'=>\App\Models\Products::where('products.sub_category',$id)
+                    ->join('categories','products.category','=','categories.id')
+                    ->select('products.*', 'categories.category_name as category_name','products.id as product_id')->get(),
+                'total_products'=>\App\Models\Products::where('sub_category',$id)->count()
+            ]);
         }
         catch (\Exception $exception){
             return redirect()->back()->with('error', $exception->getMessage());
@@ -102,7 +107,12 @@ class SubCategories extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Subcategory::find($id)->update([
+            'sub_category' => $request->input('categoryName'),
+            'category' => $request->input('parentCategory'),
+        ]);
+
+        return redirect()->back()->with('success', 'Subcategory updated successfully');
     }
 
     /**
@@ -110,6 +120,20 @@ class SubCategories extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $subcategory = Subcategory::with('products')->findOrFail($id);
+
+        foreach ($subcategory->products as $product) {
+            $imagePath = public_path("products/{$product->image}");
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        $subcategory->products()->delete();
+
+
+        $subcategory->delete();
+
+        return redirect()->back()->with('success', 'Subcategory deleted successfully');
     }
+
 }

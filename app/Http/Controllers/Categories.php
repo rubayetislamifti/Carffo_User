@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class Categories extends Controller
@@ -12,7 +13,8 @@ class Categories extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index',['categories'=>Category::all()]);
+        return view('admin.categories.index',[
+            'categories'=>Category::all()]);
     }
 
     /**
@@ -41,7 +43,11 @@ class Categories extends Controller
     public function show(string $id)
     {
         return view('admin.categories.show',[
-            'categories'=>Category::where('id',$id)->first()
+            'categories'=>Category::where('id',$id)->first(),
+            'products'=>\App\Models\Products::where('products.category',$id)
+                ->join('subcategories','products.sub_category','=','subcategories.id')
+                ->select('products.*', 'subcategories.sub_category as subcategory_name','products.id as product_id')->get(),
+            'total_products'=>\App\Models\Products::where('category',$id)->count()
         ]);
     }
 
@@ -60,7 +66,11 @@ class Categories extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Category::where('id',$id)->update([
+            'category_name'=>$request->input('categoryName'),
+        ]);
+
+        return redirect()->back()->with('success','Update Successfully');
     }
 
     /**
@@ -68,6 +78,21 @@ class Categories extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::with(['subcategories', 'products'])->findOrFail($id);
+
+
+        foreach ($category->products as $product) {
+            $imagePath = public_path("products/{$product->image}");
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        $category->subcategories()->delete();
+        $category->products()->delete();
+        $category->delete();
+
+        return redirect()->back()->with('success','Delete Successfully');
     }
+
 }

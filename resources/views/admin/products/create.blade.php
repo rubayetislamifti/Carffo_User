@@ -120,13 +120,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Product Image</label>
-                                <input type="file" name="image" class="file-upload-default">
+                                <label>Product Images (Min: 1, Max: 4)</label>
+                                <input type="file" name="images[]" class="file-upload-default" multiple accept="image/*">
                                 <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Images">
                                     <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
-                            </span>
+                                        <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
+                                    </span>
                                 </div>
                             </div>
 

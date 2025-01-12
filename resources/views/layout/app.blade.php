@@ -25,6 +25,18 @@
 
     <style>
 
+        .discount-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+            z-index: 100;
+        }
 
         .color-label {
             display: inline-block;

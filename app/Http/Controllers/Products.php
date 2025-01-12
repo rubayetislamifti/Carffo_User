@@ -49,7 +49,8 @@ class Products extends Controller
             'colors.*' => 'string',
             'sizes' => 'required|array',
             'sizes.*' => 'in:S,M,L,XL,XXL,XXXL',
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images' => 'required|array|min:1|max:4',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $sizes = implode(' ,', $request->input('sizes'));

@@ -10,6 +10,7 @@ use App\Http\Controllers\SubCategories;
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
+Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
 
 
 

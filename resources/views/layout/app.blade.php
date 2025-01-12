@@ -22,6 +22,40 @@
     <link rel="stylesheet" href="{{asset('resources/css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('resources/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('resources/css/style.css')}}" type="text/css">
+
+    <style>
+
+
+        .color-label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+        .color-label input[type="radio"] {
+            display: none;
+        }
+
+        .color-label .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: white;
+            display: none;
+        }
+
+        .color-label input[type="radio"]:checked + .checkmark {
+            display: block;
+        }
+
+
+    </style>
 </head>
 
 <body>

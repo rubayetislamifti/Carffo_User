@@ -34,4 +34,14 @@ class HomepageController extends Controller
            'related_product'=>Products::take(4)->inRandomOrder()->get()
         ]);
     }
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function register()
+    {
+        return view('register');
+    }
 }

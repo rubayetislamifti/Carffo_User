@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset('resources/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('resources/css/style.css')}}" type="text/css">
 
+    {!! htmlScriptTagJsApi() !!}
     <style>
 
         .discount-label {
@@ -66,6 +67,16 @@
             display: block;
         }
 
+        .no-hover {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .no-hover:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -81,7 +92,7 @@
 <div class="offcanvas-menu-wrapper">
     <div class="offcanvas__option">
         <div class="offcanvas__links">
-            <a href="#">Sign in</a>
+            <a href="{{route('login')}}">Sign in</a>
             <a href="#">FAQs</a>
         </div>
         <div class="offcanvas__top__hover">
@@ -118,7 +129,12 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                            <a href="#">Sign in</a>
+                            @if(Auth::check())
+                                <a href="#">{{Auth::user()->name}}</a>
+
+                            @else
+                            <a href="{{route('login')}}">Sign in</a>
+                            @endif
                             <a href="#">FAQs</a>
                         </div>
                         <div class="header__top__hover">
@@ -172,7 +188,11 @@
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
     </div>
 </header>
-
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
 @yield('content')
 
 <!-- Footer Section Begin -->

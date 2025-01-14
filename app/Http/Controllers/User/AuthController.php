@@ -29,13 +29,14 @@ class AuthController extends Controller
                 ->withInput($request->only('email'))
                 ->withErrors($validator);
         }
-        User::create([
+        $user = User::create([
             'name'=>$request->input('username'),
             'email'=>$request->input('email'),
             'password'=>Hash::make($request->input('password'))
         ]);
 
         User_Info::create([
+            'user_id'=>$user->id,
             'email'=>$request->input('email'),
         ]);
 
@@ -65,5 +66,12 @@ class AuthController extends Controller
         }
         else
             return redirect()->back()->with('error','Failed')->withInput();
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('home');
     }
 }

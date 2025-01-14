@@ -18,5 +18,11 @@ class User_Info extends Model
         'shipaddress',
         'city',
         'country',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -10,13 +10,19 @@ use App\Http\Controllers\Categories;
 use App\Http\Controllers\SubCategories;
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
-Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
-Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
+
 Route::get('/login', [HomepageController::class, 'login'])->name('login');
 Route::get('/register', [HomepageController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registration'])->name('registration');
 Route::post('/login', [AuthController::class, 'loggin'])->name('loggin');
+Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
+Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
+Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
+Route::get('/purchase-history',[HomepageController::class, 'purchaseHistory'])->name('purchaseHistory');
+Route::get('/profile',[HomepageController::class, 'profile'])->name('profile');
+Route::get('/profile/edit',[HomepageController::class, 'profileEdit'])->name('profileEdit');
+Route::put('/profile',[HomepageController::class, 'insertProfile'])->name('profileEdit.create');
 
 /*Admin*/
 Route::prefix('/admin')->group(function () {

@@ -25,7 +25,6 @@
 
     {!! htmlScriptTagJsApi() !!}
     <style>
-
         .discount-label {
             position: absolute;
             top: 10px;
@@ -76,6 +75,9 @@
             color: black;
             text-decoration: underline;
             cursor: pointer;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f0f8ff;
         }
 
     </style>
@@ -130,21 +132,18 @@
                     <div class="header__top__right">
                         <div class="header__top__links">
                             @if(Auth::check())
-                                <a href="#">{{Auth::user()->name}}</a>
-
+                                <a href="{{route('profile')}}">{{Auth::user()->name}}</a>
+                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                <a href="{{route('purchaseHistory')}}">Purchase History</a>
                             @else
                             <a href="{{route('login')}}">Sign in</a>
                             @endif
                             <a href="#">FAQs</a>
                         </div>
-                        <div class="header__top__hover">
-                            <span>Usd <i class="arrow_carrot-down"></i></span>
-                            <ul>
-                                <li>USD</li>
-                                <li>EUR</li>
-                                <li>USD</li>
-                            </ul>
-                        </div>
+
                     </div>
                 </div>
             </div>

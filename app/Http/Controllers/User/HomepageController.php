@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\User_Info;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomepageController extends Controller
 {
@@ -35,6 +37,35 @@ class HomepageController extends Controller
         ]);
     }
 
+    public function purchaseHistory()
+    {
+        return view('purchaseHistory');
+    }
+    public function profile()
+    {
+        return view('profile');
+    }
+
+    public function profileEdit()
+    {
+        return view('editProfile');
+    }
+
+    public function insertProfile(Request $request)
+    {
+        $userInfo = User_Info::where('user_id', Auth::user()->id)->first();
+        $userInfo->update([
+            'fname'=>$request->input('fname'),
+            'lname'=>$request->input('lname'),
+            'semail'=>$request->input('semail'),
+            'phone'=>$request->input('contact'),
+            'shipaddress'=>$request->input('address'),
+            'city'=>$request->input('city'),
+            'country'=>$request->input('country'),
+        ]);
+
+        return redirect()->back()->with('success','Profile updated successfully');
+    }
     public function login()
     {
         return view('login');
@@ -44,4 +75,5 @@ class HomepageController extends Controller
     {
         return view('register');
     }
+
 }

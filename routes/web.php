@@ -8,21 +8,30 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Categories;
 use App\Http\Controllers\SubCategories;
+use App\Http\Controllers\CartController;
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
-Route::get('/login', [HomepageController::class, 'login'])->name('login');
-Route::get('/register', [HomepageController::class, 'register'])->name('register');
-Route::post('/register', [AuthController::class, 'registration'])->name('registration');
-Route::post('/login', [AuthController::class, 'loggin'])->name('loggin');
-Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [HomepageController::class, 'login'])->name('login');
+    Route::get('/register', [HomepageController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'registration'])->name('registration');
+    Route::post('/login', [AuthController::class, 'loggin'])->name('loggin');
+});
+
 
 Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
 Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
-Route::get('/purchase-history',[HomepageController::class, 'purchaseHistory'])->name('purchaseHistory');
-Route::get('/profile',[HomepageController::class, 'profile'])->name('profile');
-Route::get('/profile/edit',[HomepageController::class, 'profileEdit'])->name('profileEdit');
-Route::put('/profile',[HomepageController::class, 'insertProfile'])->name('profileEdit.create');
+
+Route::post('/cart/{product_id}',[CartController::class,'store'])->name('cart.store');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/purchase-history', [HomepageController::class, 'purchaseHistory'])->name('purchaseHistory');
+    Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [HomepageController::class, 'profileEdit'])->name('profileEdit');
+    Route::put('/profile', [HomepageController::class, 'insertProfile'])->name('profileEdit.create');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+});
 
 /*Admin*/
 Route::prefix('/admin')->group(function () {

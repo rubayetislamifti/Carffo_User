@@ -60,6 +60,7 @@ class AuthController extends Controller
                 ->withErrors($validator);
         }
         $credentials = $request->only('email', 'password');
+
         if (Auth::attempt($credentials)) {
 
             return redirect()->route('home')->with('success','Login Successfull');
@@ -68,10 +69,13 @@ class AuthController extends Controller
             return redirect()->back()->with('error','Failed')->withInput();
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout();
+        $redirectTo = $request->headers->get('referer', '/');
+        $request->session()->put('redirect_after_logout', $redirectTo);
 
-        return redirect()->route('home');
+        Auth::logout();
+        $redirectUrl = $request->session()->pull('redirect_after_logout', '/');
+        return redirect($redirectUrl);
     }
 }

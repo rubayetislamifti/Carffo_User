@@ -88,7 +88,9 @@
                                 $sizesArray = explode(',', str_replace(' ', '', $product->size));
                             @endphp
                             <div class="product__details__option">
-                                <div class="product__details__option__size">
+                                <form id="cart-form" action="{{route('cart.store',['product_id'=>$product->product_id])}}" method="POST">
+                                    @csrf
+                                    <div class="product__details__option__size">
                                     <span>Size:</span>
                                     @foreach($sizesArray as $size)
                                         <label for="{{ strtolower($size) }}">{{ strtoupper($size) }}
@@ -99,7 +101,7 @@
                                 @php
                                     $colorsArray = explode(',', str_replace(' ', '', $product->color));
                                 @endphp
-                                <div class="product__details__option__color">
+                                    <div class="product__details__option__color">
                                     <span>Color:</span>
                                     @foreach($colorsArray as $index => $color)
                                         <label class="color-label" for="color-{{ $index + 1 }}" style="background-color: {{ strtolower($color) }};">
@@ -108,14 +110,20 @@
                                         </label>
                                     @endforeach
                                 </div>
+                                </form>
                             </div>
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <form id="cart-form" action="{{route('cart.store',['product_id'=>$product->product_id])}}" method="POST">
+                                            @csrf
+                                            <input type="text" name="quantity" value="1">
+                                        </form>
+
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+
+                                <a href="#" class="primary-btn" onclick="event.preventDefault(); document.getElementById('cart-form').submit();">add to cart</a>
                             </div>
 
                             <div class="product__details__last__option">

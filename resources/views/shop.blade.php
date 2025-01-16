@@ -42,7 +42,11 @@
                                 </a>
                                 <div class="product__item__text">
                                     <h6>{{$product->product_name}}</h6>
+                                    @if(Auth::check())
+                                        <a href="https://www.youtube.com/" class="add-cart">Youtube</a>
+                                    @else
                                     <a href="#" class="add-cart">+ Add To Cart</a>
+                                    @endif
                                         <h5>{{$product->price}}</h5>
                                 </div>
                             </div>

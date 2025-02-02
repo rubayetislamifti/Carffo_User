@@ -179,9 +179,9 @@
                 <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="{{asset('resources/img/icon/search.png')}}" alt=""></a>
                     <a href="#"><img src="{{asset('resources/img/icon/heart.png')}}" alt=""></a>
-                    <a href="#"><img src="{{asset('resources/img/icon/cart.png')}}" alt="">
+                    <a href="{{route('cart.index')}}"><img src="{{asset('resources/img/icon/cart.png')}}" alt="">
                         <span>{{ session('cart') ? count(session('cart')) : 0 }}</span></a>
-                    <div class="price">৳{{ session('cart') ? number_format(array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], session('cart'))), 2) : '0.00' }}</div>
+                    <div class="price">৳{{ number_format($cartTotalPrice, 2) }}</div>
                 </div>
             </div>
         </div>

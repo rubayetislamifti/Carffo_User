@@ -24,7 +24,7 @@ Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
 Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
 
 Route::post('/cart/{product_id}',[CartController::class,'store'])->name('cart.store');
-
+Route::get('/cart',[CartController::class,'create'])->name('cart.index');
 Route::middleware('auth')->group(function () {
     Route::get('/purchase-history', [HomepageController::class, 'purchaseHistory'])->name('purchaseHistory');
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');

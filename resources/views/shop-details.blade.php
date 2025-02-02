@@ -115,16 +115,32 @@
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <form id="cart-form" action="{{route('cart.store',['product_id'=>$product->product_id])}}" method="POST">
-                                            @csrf
-                                            <input type="text" name="quantity" value="1">
-                                        </form>
-
+                                        <input type="number" id="quantity-input" name="quantity" min="1" value="1">
                                     </div>
                                 </div>
 
-                                <a href="#" class="primary-btn" onclick="event.preventDefault(); document.getElementById('cart-form').submit();">add to cart</a>
+                                <a href="#" class="primary-btn" onclick="submitCartForm(event);">Add to Cart</a>
                             </div>
+                            <script>
+                                function submitCartForm(event) {
+                                    event.preventDefault();
+
+                                    // Get the main form
+                                    const cartForm = document.getElementById('cart-form');
+
+                                    // Create hidden input for the quantity value
+                                    let quantityInput = document.createElement('input');
+                                    quantityInput.type = 'hidden';
+                                    quantityInput.name = 'quantity';
+                                    quantityInput.value = document.getElementById('quantity-input').value;
+
+                                    // Append the hidden input to the form
+                                    cartForm.appendChild(quantityInput);
+
+                                    // Submit the form
+                                    cartForm.submit();
+                                }
+                            </script>
 
                             <div class="product__details__last__option">
                                 <h5><span>Cash On Delivery</span></h5>

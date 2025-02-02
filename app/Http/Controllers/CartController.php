@@ -19,7 +19,26 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        $cart = session()->get('cart',[]);
+        $cartItems=[];
+        $total = 0;
+        foreach ($cart as $item){
+            $product = \App\Models\Products::find($item['product_id']);
+
+            if ($product){
+                $totalPrice = $item['quantity'] * $item['price'];
+                $total += $totalPrice;
+                $cartItems[] = [
+                    'product' => $product,
+                    'quantity' => $item['quantity'],
+                    'size' => $item['size'],
+                    'color' => $item['color'],
+                    'total_price' => $item['quantity'] * $item['price'],
+
+                ];
+            }
+        }
+        return view('cart',['cartItems'=>$cartItems,'total_price'=>$total]);
     }
 
     /**
@@ -31,19 +50,19 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (isset($cart[$product_id])) {
-            $cart[$product_id]['quantity'] += $request->input('quantity', 1);
+            $cart[$product_id]['quantity'] += $request->input('quantity',1);
         }
         else
             $cart[$product_id] = [
                 'product_id' => $products->id,
                 'price' => $products->price,
-                'quantity' => $request->input('quantity'),
+                'quantity' => $request->input('quantity',1),
                 'size'=>$request->input('size'),
                 'color'=>$request->input('color'),
             ];
         session(['cart' => $cart]);
 
-        //return response()->json($cart);
+       // return response()->json($cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 

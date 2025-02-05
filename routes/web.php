@@ -23,6 +23,7 @@ Route::middleware('guest')->group(function () {
 Route::get('/shop', [HomepageController::class, 'shop'])->name('shop');
 Route::get('/shop/details/{product}/{product_name}', [HomepageController::class, 'shopDetails'])->name('shopDetails');
 
+
 Route::post('/cart/{product_id}',[CartController::class,'store'])->name('cart.store');
 Route::get('/cart',[CartController::class,'create'])->name('cart.index');
 Route::put('/cart/update/{id}',[CartController::class,'update'])->name('cart.update');
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [HomepageController::class, 'profileEdit'])->name('profileEdit');
     Route::put('/profile', [HomepageController::class, 'insertProfile'])->name('profileEdit.create');
+    Route::get('/checkout', [HomepageController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [HomepageController::class, 'checkoutPost'])->name('checkout.post');
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
 });
 

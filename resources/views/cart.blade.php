@@ -147,7 +147,7 @@
                         <li>Subtotal <span>৳ {{number_format($total_price,2)}}</span></li>
                         <li>Total <span>৳ {{number_format($total_price,2)}}</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                    <a href="{{route('checkout')}}" class="primary-btn">Proceed to checkout</a>
                 </div>
             </div>
             @else

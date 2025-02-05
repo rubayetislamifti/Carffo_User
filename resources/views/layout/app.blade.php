@@ -25,6 +25,126 @@
 
     {!! htmlScriptTagJsApi() !!}
     <style>
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .size-label {
+            position: relative;
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .size-label input[type="radio"] {
+            display: none;
+        }
+
+        .size-label span {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .size-label:hover {
+            background-color: #e0e0e0;
+        }
+
+        .size-label input[type="radio"]:checked + span {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+
+        .color-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-label {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .color-label input[type="radio"] {
+            display: none;
+        }
+
+        .color-label .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: black; /* Default for visibility */
+            display: none;
+        }
+
+        .color-label input[type="radio"]:checked + .checkmark {
+            display: block;
+            color: white; /* Fallback for better contrast */
+            text-shadow: 0px 0px 3px black; /* Visibility improvement for white colors */
+        }
+
+        .color-display {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            vertical-align: middle;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .quantity-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .quantity-input-wrapper {
+            position: relative;
+            max-width: 120px;
+        }
+
+        .quantity-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: #4A90E2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+
+
+
+
         .discount-label {
             position: absolute;
             top: 10px;

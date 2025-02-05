@@ -25,6 +25,9 @@ Route::get('/shop/details/{product}/{product_name}', [HomepageController::class,
 
 Route::post('/cart/{product_id}',[CartController::class,'store'])->name('cart.store');
 Route::get('/cart',[CartController::class,'create'])->name('cart.index');
+Route::put('/cart/update/{id}',[CartController::class,'update'])->name('cart.update');
+Route::delete('/cart/delete/{id}',[CartController::class,'destroy'])->name('cart.destroy');
+
 Route::middleware('auth')->group(function () {
     Route::get('/purchase-history', [HomepageController::class, 'purchaseHistory'])->name('purchaseHistory');
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');

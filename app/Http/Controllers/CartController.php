@@ -87,7 +87,31 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $cart = session()->get('cart', []);
+
+        if (array_key_exists($id, $cart)) {
+
+            $validatedData = $request->only(['size', 'color', 'quantity']);
+
+            if (isset($validatedData['size'])) {
+                $request->validate(['size' => 'required|string']);
+                $cart[$id]['size'] = $validatedData['size'];
+            }
+
+            if (isset($validatedData['color'])) {
+                $request->validate(['color' => 'required|string']);
+                $cart[$id]['color'] = $validatedData['color'];
+            }
+
+            if (isset($validatedData['quantity'])) {
+                $request->validate(['quantity' => 'required|integer|min:1']);
+                $cart[$id]['quantity'] = $validatedData['quantity'];
+            }
+
+            session()->put('cart', $cart);
+
+            return back()->with('success', 'Cart updated successfully');
+        }
     }
 
     /**
@@ -95,6 +119,9 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        session()->forget('cart.' . $id);
+
+
+        return redirect()->back()->with('success', 'Product removed from cart!');
     }
 }

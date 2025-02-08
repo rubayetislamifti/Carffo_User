@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderInfo;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Products;
@@ -10,6 +11,7 @@ use App\Models\User_Info;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
 {
@@ -100,7 +102,6 @@ class HomepageController extends Controller
                     'size' => $item['size'],
                     'color' => $item['color'],
                     'total_price' => $item['quantity'] * $item['price'],
-
                 ];
             }
         }
@@ -113,23 +114,34 @@ class HomepageController extends Controller
         $totals = $request->input('total');
         $shippingAddress = $request->input('address');
 
+        $orderNumber = Carbon::now()->format('YmdHi') . Auth::user()->id;
         $cartData = [];
-
         foreach ($productIds as $index => $productId) {
-            $cartData[] = [
+           $cartData[] = [
                 'user_id' => Auth::user()->id,
                 'product_id' => $productId,
                 'quantity' => $quantities[$index],
                 'price' => $totals[$index],
-                'order_no' => Carbon::now()->format('YmdHi') . Auth::user()->id,
+                'order_no' => $orderNumber,
                 'status' => 'Pending',
                 'shipping_address' => $shippingAddress,
+                'order_notes'=>$request->input('notes'),
+                'phone'=>$request->input('phone'),
+                'city'=>$request->input('city'),
+                'size'=>$request->input('size')[$index],
+                'color'=>$request->input('color')[$index],
             ];
+            Cart::create($cartData[$index]);
             session()->forget('cart.' . $productId);
         }
 
-        $cart = Cart::insert($cartData);
-
+        $orderDetails = [
+            'order_no' => $orderNumber,
+            'shipping_address' => $shippingAddress,
+            'status' => 'Pending',
+            'items' => $cartData
+        ];
+        Mail::to(env('ADMIN_EMAIL'))->send(new OrderInfo($orderDetails));
 
         return redirect()->route('home')->with('success','Order placed successfully');
     }

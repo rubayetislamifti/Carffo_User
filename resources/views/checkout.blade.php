@@ -86,6 +86,8 @@
                                     <input type="hidden" value="{{$item['product']->id}}" name="product_id[]">
                                     <input type="hidden" value="{{$item['quantity']}}" name="quantity[]">
                                     <input type="hidden" value="{{$item['total_price']}}" name="total[]">
+                                    <input type="hidden" value="{{$item['size']}}" name="size[]">
+                                    <input type="hidden" value="{{$item['color']}}" name="color[]">
                                 <li>{{$item['product']->product_name}} (x{{ $item['quantity'] }}) <span>৳ {{number_format($item['total_price'],2)}}</span></li>
                                 @endforeach
                             </ul>

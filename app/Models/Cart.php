@@ -20,6 +20,9 @@ class Cart extends Model
         'payment',
         'delivery_date',
         'shipping_address',
-
+        'phone',
+        'city',
+        'size',
+        'color'
     ];
 }

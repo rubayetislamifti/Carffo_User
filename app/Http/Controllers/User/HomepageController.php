@@ -113,10 +113,14 @@ class HomepageController extends Controller
         $quantities = $request->input('quantity');
         $totals = $request->input('total');
         $shippingAddress = $request->input('address');
-
+        $subTotal = 0;
+        $deliveryCharge = (Auth::user()->userInfo->city == 'Dhaka') ? 80 : 120;
         $orderNumber = Carbon::now()->format('YmdHi') . Auth::user()->id;
         $cartData = [];
         foreach ($productIds as $index => $productId) {
+            $product = Products::find($productId);
+            $itemTotal = $quantities[$index] * $product->price;
+            $subTotal += $itemTotal;
            $cartData[] = [
                 'user_id' => Auth::user()->id,
                 'product_id' => $productId,
@@ -130,20 +134,31 @@ class HomepageController extends Controller
                 'city'=>$request->input('city'),
                 'size'=>$request->input('size')[$index],
                 'color'=>$request->input('color')[$index],
+               'product_name' => $product->product_name, // Include product name
+               'product_price' => $product->price,
             ];
             Cart::create($cartData[$index]);
-            session()->forget('cart.' . $productId);
-        }
+//            session()->forget('cart.' . $productId);
 
+        }
+        $totalAmount = $subTotal + $deliveryCharge;
         $orderDetails = [
             'order_no' => $orderNumber,
             'shipping_address' => $shippingAddress,
             'status' => 'Pending',
-            'items' => $cartData
+            'items' => $cartData,
+            'total_amount'=>$totalAmount,
+            'sub_total'=>$subTotal,
+            'delivery_charge'=>$deliveryCharge
         ];
         Mail::to(env('ADMIN_EMAIL'))->send(new OrderInfo($orderDetails));
 
-        return redirect()->route('home')->with('success','Order placed successfully');
+        return view('invoice',['orderDetails'=>$orderDetails]);
     }
+
+//    public function invoice()
+//    {
+//        return view('invoice');
+//    }
 
 }

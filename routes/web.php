@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [HomepageController::class, 'insertProfile'])->name('profileEdit.create');
     Route::get('/checkout', [HomepageController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [HomepageController::class, 'checkoutPost'])->name('checkout.post');
+//    Route::get('/invoice', [HomepageController::class, 'invoice'])->name('invoice');
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
 });
 

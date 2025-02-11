@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +45,9 @@ class DashboardController extends Controller
 
     public function welcome()
     {
-        return view('admin.index');
+        return view('admin.index',[
+            'cart'=>Cart::where('status','Pending')->get(),
+        ]);
     }
 
     public function logout()

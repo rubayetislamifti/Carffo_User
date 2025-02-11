@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Categories;
 use App\Http\Controllers\SubCategories;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
@@ -51,6 +52,8 @@ Route::prefix('/admin')->group(function () {
         Route::resource('category', Categories::class);
         Route::resource('subcategory', SubCategories::class);
         Route::resource('product', Products::class);
+
+        Route::get('/pendingOrders',[OrderController::class,'pendingOrders'])->name('pendingOrders');
 
         Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
     });

@@ -134,11 +134,11 @@ class HomepageController extends Controller
                 'city'=>$request->input('city'),
                 'size'=>$request->input('size')[$index],
                 'color'=>$request->input('color')[$index],
-               'product_name' => $product->product_name, // Include product name
+               'product_name' => $product->product_name,
                'product_price' => $product->price,
             ];
             Cart::create($cartData[$index]);
-//            session()->forget('cart.' . $productId);
+            session()->forget('cart.' . $productId);
 
         }
         $totalAmount = $subTotal + $deliveryCharge;

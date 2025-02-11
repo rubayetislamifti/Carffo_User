@@ -49,7 +49,7 @@
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="../pages/icons/font-awesome.html">Pending Orders</a>
+                        <a class="nav-link" href="{{route('pendingOrders')}}">Pending Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/icons/font-awesome.html">Shipped Orders</a>

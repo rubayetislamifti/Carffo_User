@@ -32,26 +32,26 @@
                     <tbody>
                     @foreach($cart as $carts)
                         <tr>
-                            <td> {{$carts->product_id}} </td>
+                            <td> {{$carts->product_name}} </td>
                             <td>
                                 {{$carts->quantity}}
                             </td>
-                            <td> {{$carts->size}} </td>
+                            <td> {{$carts->product_size}} </td>
                             <td>
-                                <span style="display: inline-block; width: 20px; height: 20px; background-color: {{$carts->color}}; border-radius: 50%;"></span>
+                                <span style="display: inline-block; width: 20px; height: 20px; background-color: {{$carts->product_color}}; border-radius: 50%;"></span>
                             </td>
 
                             <td> <button
                                     type="button"
                                     class="btn btn-primary"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#detailsModal">
+                                    data-bs-target="#detailsModal{{$carts->order_no}}">
                                     Details ->
                                 </button>
                             </td>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="detailsModal{{$carts->order_no}}" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -59,7 +59,13 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form>
+                                            <form id="submit-form" action="{{route('processingOrders')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" value="{{$carts->order_no}}" name="order_no">
+                                                <div class="mb-3">
+                                                    <label for="paymentDetails" class="form-label">Delivery Date</label>
+                                                    <input type="date" class="form-control" name="delivery_date" id="paymentDetails" placeholder="Enter payment details">
+                                                </div>
                                                 <div class="mb-3">
                                                     <label for="paymentDetails" class="form-label">Payment Details</label>
                                                     <input type="text" value="{{$carts->payment}}" class="form-control" id="paymentDetails" placeholder="Enter payment details" readonly>
@@ -82,13 +88,13 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="userInfo" class="form-label">User Info</label>
-                                                    <input type="text" class="form-control" id="userInfo" placeholder="Enter user information" readonly>
+                                                    <input type="text" class="form-control" value="{{$carts->fname}} {{$carts->lname}}" id="userInfo" placeholder="Enter user information" readonly>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save Changes</button>
+                                            <button onclick="event.preventDefault(); document.getElementById('submit-form').submit();"  type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

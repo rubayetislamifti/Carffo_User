@@ -54,6 +54,7 @@ Route::prefix('/admin')->group(function () {
         Route::resource('product', Products::class);
 
         Route::get('/pendingOrders',[OrderController::class,'pendingOrders'])->name('pendingOrders');
+        Route::post('/pendingOrders',[OrderController::class,'processingOrders'])->name('processingOrders');
 
         Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
     });
